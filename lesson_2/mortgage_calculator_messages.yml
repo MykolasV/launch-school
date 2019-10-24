@@ -1,0 +1,8 @@
+welcome: "Welcome to Mortgage Calculator! What is your name?"
+valid_name: "Please enter a valid name."
+amount: "What is the amount of your loan in pounds?"
+valid_number: "Please provide a valid number."
+apr: "What is the Annual Percentage Rate for your loan?"
+duration: "What is the duration of your loan in years?"
+another_calculation: "Would you like to make another calculation? (type 'Y' if yes)"
+bye: "Thank you for using the Mortgage Calculator. Good bye!"
