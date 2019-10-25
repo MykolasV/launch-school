@@ -51,7 +51,7 @@ end
 def retrieve_name
   loop do
     name = gets.chomp
-    if name.empty?() || name.start_with?(' ') || name.end_with?(' ')
+    if name.empty? || name.start_with?(' ') || name.end_with?(' ')
       prompt(MESSAGES['valid_name'])
     else
       return name
