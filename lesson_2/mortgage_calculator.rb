@@ -109,7 +109,7 @@ loop do
 
   until answer == 'y' || answer == 'n'
     prompt(MESSAGES['y_or_n'])
-    answer = gets.chomp
+    answer = gets.chomp.downcase
   end
 
   if answer == 'n'
