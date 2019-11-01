@@ -7,8 +7,10 @@ OPTIONS = <<-MSG
    'v' for spock
 MSG
 
-player_score   = 0
-computer_score = 0
+player_score   = []
+computer_score = []
+
+MAX_WINS = 5
 
 def clear
   system('clear') || system('cls')
@@ -33,18 +35,16 @@ def win?(first, second)
 end
 
 def player_choice
-  input = gets.chomp.downcase
-  arr   = %w(r p s l v)
+  initials = %w(r p s l v)
 
-  until arr.include?(input)
+  loop do
+    input = gets.chomp.downcase
+    return VALID_CHOICES[initials.index(input)] if initials.include?(input)
     clear
     prompt("That's not a valid choice.")
     prompt("Please choose:")
     prompt(OPTIONS)
-    input = gets.chomp.downcase
   end
-
-  VALID_CHOICES[arr.index(input)]
 end
 
 def results(player, computer)
@@ -57,16 +57,37 @@ def results(player, computer)
   end
 end
 
-def play_again?
-  answer = gets.chomp.downcase
+def update_scores(result, player_score, computer_score)
+  if result == "You won!"
+    player_score << 1
+  elsif result == "Computer won!"
+    computer_score << 1
+  end
+end
 
+def display_grand_winner(player_wins, computer_wins)
+  if player_wins == MAX_WINS
+    filler
+    prompt("The match is over. You are the grand winner!")
+  elsif computer_wins == MAX_WINS
+    filler
+    prompt("The match is over. Computer is the grand winner!")
+  end
+end
+
+def play_again?
+  prompt("Do you want to play again? ('y' if yes, 'n' if no)")
+
+  answer = ''
   loop do
-    if %w(y n).include?(answer)
-      return answer
-    else
-      prompt("Please type in 'y' to play again or 'n' to quit.")
-      answer = gets.chomp.downcase
-    end
+    answer = gets.chomp.downcase
+    break if %w(y n).include?(answer)
+    prompt("Please type in 'y' to play again or 'n' to quit.")
+  end
+
+  case answer
+  when 'y' then true
+  when 'n' then false
   end
 end
 
@@ -74,7 +95,7 @@ clear
 
 puts "Welcome to the game!"
 filler
-puts "The first one to reach five wins is the grand winner."
+puts "The first one to reach #{MAX_WINS} wins is the grand winner."
 filler
 
 loop do
@@ -91,36 +112,26 @@ loop do
   result = results(choice, computer_choice)
   prompt(result)
 
-  if result == "You won!"
-    player_score += 1
-  elsif result == "Computer won!"
-    computer_score += 1
-  end
+  update_scores(result, player_score, computer_score)
+
+  player_wins   = player_score.length
+  computer_wins = computer_score.length
 
   filler
 
-  prompt("Player's score is #{player_score}")
-  prompt("Computer's score is #{computer_score}")
+  prompt("Player's score is #{player_wins}")
+  prompt("Computer's score is #{computer_wins}")
 
   filler
 
-  if player_score == 5
-    filler
-    prompt("The match is over. You are the grand winner!")
-  elsif computer_score == 5
-    filler
-    prompt("The match is over. Computer is the grand winner!")
-  end
+  display_grand_winner(player_wins, computer_wins)
 
-  if player_score == 5 || computer_score == 5
+  if player_wins == MAX_WINS || computer_wins == MAX_WINS
     filler
-    prompt("Do you want to play again? ('y' if yes, 'n' if no)")
+    break unless play_again?
 
-    answer = play_again?
-    break if answer == 'n'
-
-    player_score   = 0
-    computer_score = 0
+    player_score   = []
+    computer_score = []
     clear
   end
 end
