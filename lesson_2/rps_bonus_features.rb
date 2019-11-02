@@ -1,4 +1,5 @@
 VALID_CHOICES = %w(rock paper scissors lizard spock)
+
 OPTIONS = <<-MSG
 'r' for rock,
    'p' for paper,
@@ -6,9 +7,6 @@ OPTIONS = <<-MSG
    'l' for lizard,
    'v' for spock
 MSG
-
-player_score   = []
-computer_score = []
 
 MAX_WINS = 5
 
@@ -57,19 +55,19 @@ def results(player, computer)
   end
 end
 
-def update_scores(result, player_score, computer_score)
+def update_scores(result, scores)
   if result == "You won!"
-    player_score << 1
+    scores[:player] += 1
   elsif result == "Computer won!"
-    computer_score << 1
+    scores[:computer] += 1
   end
 end
 
-def display_grand_winner(player_wins, computer_wins)
-  if player_wins == MAX_WINS
+def display_grand_winner(scores)
+  if scores[:player] == MAX_WINS
     filler
     prompt("The match is over. You are the grand winner!")
-  elsif computer_wins == MAX_WINS
+  elsif scores[:computer] == MAX_WINS
     filler
     prompt("The match is over. Computer is the grand winner!")
   end
@@ -85,10 +83,7 @@ def play_again?
     prompt("Please type in 'y' to play again or 'n' to quit.")
   end
 
-  case answer
-  when 'y' then true
-  when 'n' then false
-  end
+  answer == 'y'
 end
 
 clear
@@ -97,6 +92,8 @@ puts "Welcome to the game!"
 filler
 puts "The first one to reach #{MAX_WINS} wins is the grand winner."
 filler
+
+scores = { player: 0, computer: 0 }
 
 loop do
   prompt("Choose one: #{VALID_CHOICES.join(', ')}")
@@ -112,26 +109,23 @@ loop do
   result = results(choice, computer_choice)
   prompt(result)
 
-  update_scores(result, player_score, computer_score)
-
-  player_wins   = player_score.length
-  computer_wins = computer_score.length
+  update_scores(result, scores)
 
   filler
 
-  prompt("Player's score is #{player_wins}")
-  prompt("Computer's score is #{computer_wins}")
+  prompt("Player's score is #{scores[:player]}")
+  prompt("Computer's score is #{scores[:computer]}")
 
   filler
 
-  display_grand_winner(player_wins, computer_wins)
+  display_grand_winner(scores)
 
-  if player_wins == MAX_WINS || computer_wins == MAX_WINS
+  if scores[:player] == MAX_WINS || scores[:computer] == MAX_WINS
     filler
     break unless play_again?
 
-    player_score   = []
-    computer_score = []
+    scores = { player: 0, computer: 0 }
+
     clear
   end
 end
