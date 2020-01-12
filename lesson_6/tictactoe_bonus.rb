@@ -208,6 +208,7 @@ loop do
 
   score = { 'Player' => 0, 'Computer' => 0 }
   current_player = determine_first_move(FIRST_PLAYER)
+
   loop do
     break if score['Player'] == MAX_WINS || score['Computer'] == MAX_WINS
 
