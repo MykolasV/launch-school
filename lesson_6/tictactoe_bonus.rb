@@ -65,9 +65,10 @@ def joinor(array, delimiter = ', ', word = 'or')
 end
 
 def player_places_piece!(brd)
+  prompt("It's your turn.")
+
   square = ''
   loop do
-    prompt("It's your turn.")
     prompt("Choose a square #{joinor(empty_squares(brd))}:")
     square = gets.chomp
     break if empty_squares(brd).map(&:to_s).include?(square)
@@ -103,40 +104,35 @@ def defend_square(brd)
   square
 end
 
+def take_five(brd)
+  5 if brd[5] == INITIAL_MARKER
+end
+
 def computer_places_piece!(brd)
-  square = attack_square(brd)
+  square = attack_square(brd) || defend_square(brd) || take_five(brd)
 
-  if !square
-    square = defend_square(brd)
-  end
-
-  if !square
-    square = 5 if brd[5] == INITIAL_MARKER
-  end
-
-  if !square
-    square = empty_squares(brd).sample
-  end
+  square = empty_squares(brd).sample unless square
 
   prompt("Computer's turn...")
   sleep(2)
   brd[square] = COMPUTER_MARKER
 end
 
-def determine_first_move(first_player)
-  first_player == 'choose' ? retrieve_first_player_option : first_player
+def determine_first_move(player)
+  player == 'choose' ? retrieve_first_player_option : player
 end
 
 def retrieve_first_player_option
   option = ''
   loop do
-    prompt("Who goes first: player or computer?")
+    prompt("Who goes first: player or computer?" \
+      " ('p' for player, 'c' for computer)")
     option = gets.chomp.downcase
-    break if %w(player computer).include?(option)
-    prompt("Invalid input. Pleas choose 'player' or 'computer'.")
+    break if %w(p c).include?(option)
+    prompt("Invalid input. Please try again.")
   end
 
-  option
+  option == 'p' ? 'player' : 'computer'
 end
 
 def game_play(brd, current_player)
@@ -186,17 +182,21 @@ def detect_grand_winner(score)
   score.keys.select { |key| score[key] == MAX_WINS }.join
 end
 
+def grand_winner?(score)
+  score['Player'] == MAX_WINS || score['Computer'] == MAX_WINS
+end
+
 def play_again?
-  prompt("Play again? ('yes' or 'no')")
+  prompt("Play again? ('y' or 'n')")
 
   answer = ''
   loop do
     answer = gets.chomp.downcase
-    break if %w(yes no).include?(answer)
-    prompt("Invalid input. Please type in 'yes' or 'no'.")
+    break if %w(y n).include?(answer)
+    prompt("Invalid input. Please type in 'y' to play again or 'n' to quit.")
   end
 
-  answer == 'yes'
+  answer == 'y'
 end
 
 clear
@@ -210,7 +210,7 @@ loop do
   current_player = determine_first_move(FIRST_PLAYER)
 
   loop do
-    break if score['Player'] == MAX_WINS || score['Computer'] == MAX_WINS
+    break if grand_winner?(score)
 
     board = initialize_board
     game_play(board, current_player)
