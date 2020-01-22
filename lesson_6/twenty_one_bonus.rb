@@ -24,12 +24,17 @@ def filler
   puts '-' * 40
 end
 
-def start?
-  loop do
-    prompt("Press 'enter' to start!")
-    answer = gets.chomp
-    break if answer == ''
-  end
+def introduction
+  clear
+  prompt("Welcome to #{GAME}!")
+  prompt("Try to get as close to #{MAX_NUMBER} as possible, " \
+    "without going over.")
+  prompt("If you go over #{MAX_NUMBER}, it's a 'bust' and you lose.")
+  filler
+  prompt("The first to reach #{MAX_POINTS} points will be the grand winner!")
+  filler
+  prompt("Press 'enter' to start!")
+  gets
 end
 
 def initialize_deck
@@ -110,7 +115,7 @@ def player_turn!(deck, player_cards, dealer_cards, player_total)
     filler
 
     hit_or_stay = retrieve_hit_or_stay
-    prompt(hit_or_stay)
+    prompt("You chose to #{hit_or_stay}!")
     break if hit_or_stay == 'stay' || busted?(player_total)
     deal_card!(deck, player_cards)
     player_total = card_values_sum(player_cards)
@@ -130,11 +135,11 @@ def dealer_turn!(deck, dealer_cards, dealer_total)
     sleep(3)
 
     if dealer_total >= MAX_DEALER_HIT
-      prompt('stay')
+      prompt('Dealer chose to stay!')
       break
     else
       deal_card!(deck, dealer_cards)
-      prompt('hit')
+      prompt('Dealer chose to hit!')
       dealer_total = card_values_sum(dealer_cards)
       break if busted?(dealer_total)
     end
@@ -167,22 +172,22 @@ def update_score!(score, player_total, dealer_total)
     score[:dealer] += 1
   elsif busted?(dealer_total)
     score[:player] += 1
-  elsif player_total == dealer_total
-    nil
-  else
-    player_total > dealer_total ? score[:player] += 1 : score[:dealer] += 1
+  elsif dealer_total > player_total
+    score[:dealer] += 1
+  elsif player_total > dealer_total
+    score[:player] += 1
   end
 end
 
 def display_score(score)
-  case score[:player]
-  when 1 then prompt("You have #{score[:player]} point.")
-  else        prompt("You have #{score[:player]} points.")
-  end
+  score.each do |player, points|
+    current_player = player == :player ? 'You' : 'Dealer'
+    verb_form = player == :player ? 'have' : 'has'
 
-  case score[:dealer]
-  when 1 then prompt("Dealer has #{score[:dealer]} point.")
-  else        prompt("Dealer has #{score[:dealer]} points.")
+    case points
+    when 1 then prompt("#{current_player} #{verb_form} #{points} point.")
+    else        prompt("#{current_player} #{verb_form} #{points} points.")
+    end
   end
 end
 
@@ -207,15 +212,7 @@ def play_again?
   answer == 'y'
 end
 
-clear
-prompt("Welcome to #{GAME}!")
-prompt("Try to get as close to #{MAX_NUMBER} as possible, without going over.")
-prompt("If you go over #{MAX_NUMBER}, it's a 'bust' and you lose.")
-filler
-prompt("The first to reach #{MAX_POINTS} points will be the grand winner!")
-filler
-start?
-
+introduction
 score = { player: 0, dealer: 0 }
 
 loop do
@@ -244,9 +241,7 @@ loop do
   if busted?(player_total)
     clear
     prompt("You busted! Dealer wins!")
-  end
-
-  unless busted?(player_total)
+  else
     clear
     prompt("Dealer's turn...")
     dealer_turn!(deck, dealer_cards, dealer_total)
