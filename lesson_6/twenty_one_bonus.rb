@@ -179,16 +179,13 @@ def update_score!(score, player_total, dealer_total)
   end
 end
 
-def display_score(score)
-  score.each do |player, points|
-    current_player = player == :player ? 'You' : 'Dealer'
-    verb_form = player == :player ? 'have' : 'has'
+def format_score(score)
+  score == 1 ? "#{score} point." : "#{score} points."
+end
 
-    case points
-    when 1 then prompt("#{current_player} #{verb_form} #{points} point.")
-    else        prompt("#{current_player} #{verb_form} #{points} points.")
-    end
-  end
+def display_score(score)
+  prompt("You have " + format_score(score[:player]))
+  prompt("Dealer has " + format_score(score[:dealer]))
 end
 
 def display_grand_winner(score)
