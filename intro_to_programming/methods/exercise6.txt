@@ -1,0 +1,2 @@
+An error occured while invoking the 'calculate_product' method.
+Wrong number of arguments were supplied, 1 instead of 2.

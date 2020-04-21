@@ -1,0 +1,2 @@
+There is a syntax error on the 2nd line of the code. A currly closing bracket 
+was needed instead of a round one.

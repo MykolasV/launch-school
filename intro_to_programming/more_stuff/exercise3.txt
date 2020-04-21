@@ -1,0 +1,3 @@
+Exception handling means anticipating errors and handling them properly so that 
+the whole program isn't broken by one error. This is done by changing the flow 
+of control without exiting the program entirely.

@@ -1,0 +1,1 @@
+Hashes store key-value pairs and arrays store elements in a sequence.

@@ -1,0 +1,2 @@
+Both methods can be located on the File class documentation page. File::path is a 
+class method and File#path is an instance method.

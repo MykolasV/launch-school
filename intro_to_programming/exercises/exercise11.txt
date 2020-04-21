@@ -1,0 +1,3 @@
+http://ruby-doc.org/
+
+Official Ruby documentation. Comprehensive and easy to navigate.
