@@ -26,18 +26,25 @@ class Score
   end
 
   def update
-    winner = determine_winner
     current[winner] += 1 if current.key?(winner)
   end
 
   def display_winner
-    winner = determine_winner
-
     case winner
     when player1   then prompt("#{player1.name} won!")
     when player2   then prompt("#{player2.name} won!")
     else                prompt("It's a tie!")
     end
+  end
+
+  def display_grand_winner
+    prompt("Congratulations #{grand_winner}! You are the grand winner!!!")
+  end
+
+  private
+
+  def winner
+    determine_winner
   end
 
   def determine_winner
@@ -50,13 +57,12 @@ class Score
     end
   end
 
-  def determine_grand_winner
-    current[player1] == RPSGame::MAX_POINTS ? player1.name : player2.name
+  def grand_winner
+    determine_grand_winner
   end
 
-  def display_grand_winner
-    grand_winner = determine_grand_winner
-    prompt("Congratulations #{grand_winner}! You are the grand winner!!!")
+  def determine_grand_winner
+    current[player1] == RPSGame::MAX_POINTS ? player1.name : player2.name
   end
 end
 
@@ -162,12 +168,12 @@ class Human < Player
     loop do
       prompt('Type "1" for "rock", "2" for "paper", "3" for "scissors", ')
       prompt('"4" for "lizard" or "5" for "spock"')
-      choice = gets.chomp.to_i
-      break if [*1..5].include?(choice)
+      choice = gets.chomp
+      break if [*1..5].map(&:to_s).include?(choice)
       prompt("Invalid input!")
     end
 
-    self.move = Move.new(Move::VALUES[choice - 1])
+    self.move = Move.new(Move::VALUES[choice.to_i - 1])
     history << move.to_s
   end
 
@@ -176,7 +182,7 @@ class Human < Player
     name = ''
     loop do
       name = gets.chomp
-      break unless name.start_with?(' ') || name.end_with?(' ')
+      break unless name.empty? || name.start_with?(' ') || name.end_with?(' ')
       prompt("Oops! Seems like there was a mistake. Try again!")
     end
     self.name = name.capitalize
