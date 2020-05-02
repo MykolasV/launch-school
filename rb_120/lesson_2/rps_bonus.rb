@@ -41,29 +41,27 @@ class Score
     prompt("Congratulations #{grand_winner}! You are the grand winner!!!")
   end
 
-  private
-
-  def winner
-    determine_winner
-  end
-
   def determine_winner
-    if player1.move > player2.move
-      player1
-    elsif player1.move < player2.move
-      player2
-    else
-      'tie'
-    end
-  end
-
-  def grand_winner
-    determine_grand_winner
+    @winner = if player1.move > player2.move
+                player1
+              elsif player1.move < player2.move
+                player2
+              else
+                'tie'
+              end
   end
 
   def determine_grand_winner
-    current[player1] == RPSGame::MAX_POINTS ? player1.name : player2.name
+    @grand_winner = if current[player1] == RPSGame::MAX_POINTS
+                      player1.name
+                    else
+                      player2.name
+                    end
   end
+
+  private
+
+  attr_reader :winner, :grand_winner
 end
 
 class Rock
@@ -278,10 +276,17 @@ class RPSGame
   end
 
   def scores
+    score.determine_winner
     score.display_winner
     score.update
     score.display
     sleep(4)
+  end
+
+  def grand_winner
+    score.determine_grand_winner
+    filler
+    score.display_grand_winner
   end
 
   def max_wins?
@@ -322,8 +327,7 @@ class RPSGame
       scores
       break if max_wins?
     end
-    filler
-    score.display_grand_winner
+    grand_winner
   end
 
   def display_goodbye_message
