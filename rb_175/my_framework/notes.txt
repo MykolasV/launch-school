@@ -1,0 +1,4 @@
+1. run "bundle exec rackup config.ru -p 9595" in the command line
+
+2. make a request in the browser to "http://localhost:9595/"   OR
+run "curl -X GET localhost:9595 -m 30 -v" in a new terminal in the command line
