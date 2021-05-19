@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Nutrition Facts Label</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      html {
+        box-sizing: border-box;
+      }
+      
+      *, *::before, *::after {
+        box-sizing: inherit;
+      }
+      
+      body {
+        font-family: "Helvetica Black", Helvetica, sans-serif;
+      }
+      
+      article {
+        width: 680px;
+        font-size: 28px;
+        border: 2px solid black;
+        padding: 10px 15px;
+      }
+      
+      h1 {
+        font-family: Arial, "Franklin Gothic Heavy", sans-serif;
+        font-size: 3.5rem;
+        margin: 0;
+      }
+      
+      p {
+        margin: 0;
+      }
+      
+      section h2 {
+        font-size: 1.75rem;
+        margin: 5px 0;
+        padding: 10px 0;
+        border-top: 30px solid black;
+        border-bottom: 1px solid black;
+      }
+      
+      section p:nth-child(2) {
+        display: inline-block;
+        padding-bottom: 5px;
+        border-bottom: 15px solid black;
+        width: 50%;
+      }
+      
+      section p:nth-child(3) {
+        display: inline-block;
+        width: 50%;
+        text-align: right;
+        padding-bottom: 5px;
+        border-bottom: 15px solid black;
+      }
+      
+      section:nth-of-type(2) h2 {
+        text-align: right;
+        margin: 0;
+        border: 0;
+        padding: 9px 0 0 0;
+      }
+      
+      section dl {
+        margin: 1px 0;
+        border-top: 1px solid black;
+      }
+      
+      section dt {
+        display: inline-block;
+        font-weight: bold;
+        padding-top: 2px;
+        width: auto;
+      }
+      
+      section dd {
+        display: inline-block;
+        margin-left: 0;
+        padding-top: 2px;
+        padding-left: 8px;
+        width: auto;
+      }
+      
+      section dl dd:nth-child(3) {
+        display: inline-block;
+        font-weight: bold;
+        /* text-align: right;
+        width: 76.2%; */
+        float: right;
+      }
+      
+      section dl.nested-description {
+        margin-top: 2px;
+        margin-left: 28px;
+      }
+      
+      section .nested-description dt {
+        display: inline-block;
+        font-weight: normal;
+        padding-top: 2px;
+        width: auto;
+      }
+      
+      section .nested-description dd {
+        padding-left: 8px;
+        text-align: left;
+        width: auto;
+      }
+      
+      section .nested-description dd:nth-child(3) {
+        display: inline-block;
+        font-weight: bold;
+        /* text-align: right;
+        width: 66.2%; */
+        float: right;
+      }
+      
+      section dl:nth-child(5) dd:last-of-type {
+        /* width: 66.4%; */
+        float: right;
+      }
+      
+      section dl:nth-child(6) dd:last-of-type {
+        /* width: 69.5%; */
+        float: right;
+      }
+      
+      section dl:nth-child(7) dd:last-of-type {
+        /* width: 52.1%; */
+        float: right;
+      }
+      
+      section dl:nth-child(8) dd:last-of-type {
+        /* width: 67.7%; */
+        float: right;
+      }
+      
+      section dl:last-of-type {
+        border-bottom: 20px solid black;
+      }
+      
+      table {
+        margin-bottom: 15px;
+        border-collapse: collapse;
+      }
+      
+      table tr {
+        border-bottom: 1px solid black;
+      }
+      
+      table:first-of-type tr td {
+        width: 100%;
+      }
+      
+      table:first-of-type tr td:last-of-type {
+        text-align: right;
+      }
+      
+      aside {
+        font-size: 1.6rem;
+      }
+      
+      aside p:nth-last-of-type(2),
+      aside p:nth-of-type(3) {
+        margin-left: 18px;
+      }
+      
+      table:last-of-type {
+        width: 100%;
+        margin-top: 20px;
+        font-size: 1.4rem;
+        border-collapse: collapse;
+      }
+      
+      table:last-of-type td {
+        text-align: left;
+      }
+      
+      table:last-of-type th:first-of-type,
+      table:last-of-type td:first-of-type {
+        width: 37%;
+      }
+      
+      thead th,
+      tbody, td {
+        width: auto;
+        text-align: left;
+        font-weight: normal;
+      }
+      
+      table:last-of-type tbody tr {
+        border: none;
+      }
+      
+      table:last-of-type tbody tr:nth-of-type(2) td:first-child,
+      table:last-of-type tbody tr:last-of-type td:first-child {
+        padding-left: 35px;
+      }
+    </style>
+  </head>
+  <body>
+    <article>
+      <header>
+        <h1>Nutrition Facts</h1>
+        <p>Serving Size 2/3 cup (55g)</p>
+        <p>Servings Per Container About 8</p>
+      </header>
+
+      <section>
+        <h2>Amount Per Serving</h2>
+        <p><b>Calories</b> 230</p><p>Calories from Fat 40</p>
+      </section>
+
+      <section>
+        <h2>% Daily Value*</h2>
+
+        <dl>
+          <dt>Total Fat</dt><dd>8g</dd><dd>12%</dd>
+        </dl>
+
+        <dl class="nested-description">
+          <dt>Saturated Fat</dt><dd>1g</dd><dd>5%</dd>
+        </dl>
+
+        <dl class="nested-description">
+          <dt><i>Trans</i> Fat</dt><dd>0g</dd>
+        </dl>
+
+        <dl>
+          <dt>Cholesterol</dt><dd>0mg</dd><dd>0%</dd>
+        </dl>
+
+        <dl>
+          <dt>Sodium</dt><dd>160mg</dd><dd>7%</dd>
+        </dl>
+
+        <dl>
+          <dt>Total Carbohydrate</dt><dd>37g</dd><dd>12%</dd>
+        </dl>
+
+        <dl class="nested-description">
+          <dt>Dietary Fiber</dt><dd>4g</dd><dd>16%</dd>
+        </dl>
+
+        <dl class="nested-description">
+          <dt>Sugars</dt><dd>1g</dd>
+        </dl>
+
+        <dl>
+          <dt>Protein</dt><dd>3g</dd>
+        </dl>
+      </section>
+
+      <table>
+        <tr>
+          <td>Vitamin A</td>
+          <td>10%</td>
+        </tr>
+        <tr>
+          <td>Vitamin C</td>
+          <td>8%</td>
+        </tr>
+        <tr>
+          <td>Calcium</td>
+          <td>20%</td>
+        </tr>
+        <tr>
+          <td>Iron</td>
+          <td>45%</td>
+        </tr>
+      </table>
+
+      <aside>
+        <p>* Percent Daily Values are based on a 2,000 calorie diet.</p>
+        <p>Your daily value may be higher or lower depending on</p>
+        <p>your calorie needs.</p>
+      </aside>
+
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Calories:</th>
+            <th>2,000</th>
+            <th>2,500</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Total Fat</td>
+            <td>Less than</td>
+            <td>65g</td>
+            <td>80g</td>
+          </tr>
+          <tr>
+            <td>Sat Fat</td>
+            <td>Less than</td>
+            <td>20g</td>
+            <td>25g</td>
+          </tr>
+          <tr>
+            <td>Cholesterol</td>
+            <td>Less than</td>
+            <td>300mg</td>
+            <td>300mg</td>
+          </tr>
+          <tr>
+            <td>Sodium</td>
+            <td>Less than</td>
+            <td>2,400mg</td>
+            <td>2,400mg</td>
+          </tr>
+          <tr>
+            <td colspan="2">Total Carbohydrate</td>
+            <td>300g</td>
+            <td>375g</td>
+          </tr>
+          <tr>
+            <td colspan="2">Dietary Fiber</td>
+            <td>25g</td>
+            <td>30g</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </body>
+</html>
