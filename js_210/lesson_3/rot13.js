@@ -3,7 +3,7 @@ function rotatedChar(alphabet, char, rotation) {
   let rotatedPlace = currentPlace + rotation;
 
   if (rotatedPlace > (alphabet.length - 1)) {
-    rotatedPlace -= (alphabet.length);
+    rotatedPlace -= alphabet.length;
   }
 
   return alphabet[rotatedPlace];
